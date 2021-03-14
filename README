@@ -1,0 +1,11 @@
+Creates a manifest file for an input file
+
+usage: make_manifest filename [delimiter-string]
+
+output file will be named filename.mnf
+
+The default delimiter string is " | ".
+
+Output file contents: [filename | sha256-hex-digest-of-filename], assuming the default delimiter
+
+The command "openssl sha256 filename > hashcheck.txt" can be used to verify the hash.
