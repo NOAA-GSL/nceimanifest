@@ -1,23 +1,28 @@
-# python3 file
+#!/usr/bin/python3
+
 import hashlib
 import fileinput
 import sys
-
+from pathlib import Path
 
 def make_manifest(filename, delimiter):
-    data = str('').encode('utf-8')
-    for line in fileinput.input(filename):
-        data = data + str(line).encode('utf-8')
-
-    hl = hashlib.sha256()
-    hl.update(data)
-    hash = hl.hexdigest()
-
     manfile = filename + ".mnf"
-    fh = open( manfile, "w")
-    line = str(filename) + delimiter + str(hash)
-    fh.write(line)
-    fh.close()
+    filelen = Path(filename).stat().st_size
+    try:
+        finput = open(filename, 'rb')
+        data = finput.read(filelen)
+        finput.close()
+
+        hl = hashlib.sha256()
+        hl.update(data)
+        hash = hl.hexdigest()
+
+        fh = open(manfile, "w")
+        line = str(filename) + delimiter + str(hash)
+        fh.write(line)
+        fh.close()
+    except UnicodeDecodeError as e:
+        print('failed to create hash for file ' + str(filename))
 
     return manfile
 

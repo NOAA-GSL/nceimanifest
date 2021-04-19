@@ -1,5 +1,9 @@
 Creates a manifest file for an input file
 
+Preparation:
+    make_manifest.py ASSUMES that a valid python3 interpreter is available at '/usr/bin/python3'.  If not, edit line 1.
+    make_manifest.py may need to be made executable:  chmod u+x ./make_manifest.py
+
 usage: make_manifest filename [delimiter-string]
 
 output file will be named filename.mnf
@@ -9,3 +13,10 @@ The default delimiter string is " | ".
 Output file contents: [filename | sha256-hex-digest-of-filename], assuming the default delimiter
 
 The command "openssl sha256 filename > hashcheck.txt" can be used to verify the hash.
+
+Testing:
+1) ./make_manifest.py testfile.txt
+    Creates file testfile.txt.mnf for a simple text file.
+
+2) ./make_manifest.py hello.mov
+    Creates file hello.mov.mnf for a far more complicated movie file
